@@ -22,3 +22,6 @@ else if test $answer_rules = "n"
 else
     echo "Invalid input. Please enter 'y' or 'n'."
 end
+
+prices
+echo "========================="
