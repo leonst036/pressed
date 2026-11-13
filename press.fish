@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-source (dirname (status filename))/lib/rules.fish
+source (dirname (status filename))/lib/texts.fish
 
 echo "Welcome to presssed"
 echo "====================="
