@@ -27,4 +27,5 @@ set -l weather_probabilities
     else
         set weather "snowy"
     end
+    echo $weather
 end

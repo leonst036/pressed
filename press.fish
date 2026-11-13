@@ -8,12 +8,13 @@ echo "====================="
 echo "A game to plant, harvest and press lemons into lemonade"
 
 # Creating initial varriables
-set day 0
+set day 1
 set lemons 0
+set seeds 0
 set planted_lemons 0
 set customers 0
 set customer_multiplier 1
-set money 100 # starting money
+set money 50 # starting money
 set lemonade 0
 set weather ""
 
@@ -29,12 +30,29 @@ else
 end
 
 prices
-set weather = calculateWeather $weather
+set weather (calculateWeather "$weather")
 echo "========================="
 echo "It's day $day, the weather is $weather, you have $lemons lemons and $money money."
 echo "Tomorrow $planted_lemons lemons will be ready to harvest."
 
-read -P "How much lemon seeds do you want to buy? (5 money each) " seeds_to_buy
-read -P "How many lemons do you want to plant? (2 lemon per seed) " lemons_to_plant
-read -P "How many lemons do you want to press into lemonade? (You got $lemons lemons) " lemons_to_press
+while true
+    read -P "How much lemon seeds do you want to buy? (2 money each) " seeds_to_buy
+    or exit 1
 
+    if string match -qr '^[0-9]+$' -- "$seeds_to_buy"
+        set cost (math "$seeds_to_buy * 5")
+
+        if test (math "$money - $cost") -ge 0
+            set money (math "$money - $cost")
+            set seeds (math "$seeds + $seeds_to_buy")
+            echo "Bought $seeds_to_buy seeds for $cost money. Remaining money: $money"
+            break
+        else
+            echo "Not enough money! You need $cost, but only have $money."
+        end
+    else
+        echo "Invalid input! Please enter a whole number."
+    end
+end
+read -P "How many lemons do you want to buy from the market? (5 lemon per seed) " lemons_to_bzy
+read -P "How many lemons do you want to press into lemonade? (You got $lemons lemons) " lemons_to_press
