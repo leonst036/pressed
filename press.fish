@@ -40,7 +40,7 @@ while true
     or exit 1
 
     if string match -qr '^[0-9]+$' -- "$seeds_to_buy"
-        set cost (math "$seeds_to_buy * 5")
+        set cost (math "$seeds_to_buy * 2")
 
         if test (math "$money - $cost") -ge 0
             set money (math "$money - $cost")
@@ -54,5 +54,42 @@ while true
         echo "Invalid input! Please enter a whole number."
     end
 end
-read -P "How many lemons do you want to buy from the market? (5 lemon per seed) " lemons_to_bzy
-read -P "How many lemons do you want to press into lemonade? (You got $lemons lemons) " lemons_to_press
+
+while true
+    read -P "How many lemons do you want to buy from the market? (5 lemon per seed) " lemons_to_by
+        or exit 1
+
+    if string match -qr '^[0-9]+$' -- "$lemons_to_buy"
+        set cost (math "$lemons_to_buy * 5")
+
+        if test (math "$money - $cost") -ge 0
+            set money (math "$money - $cost")
+            set lemons (math "$lemons + $lemons_to_buy")
+            echo "Bought $leoms_to_buy seeds for $cost money. You have $lemons now. Remaining money: $money"
+            break
+        else
+            echo "Not enough money! You need $cost, but only have $money."
+        end
+    else
+        echo "Invalid input! Please enter a whole number."
+    end
+end
+
+while true
+    read -P "How many lemons do you want to press into lemonade? (You got $lemons lemons) " lemons_to_press
+        or exit 1
+
+    if string match -qr '^[0-9]+$' -- "$lemons_to_press"
+        set cost lemons_to_press
+
+        if test (math "$lemons - $cost") -ge 0
+            set lemons (math "$lemons - $cost")
+            echo "Pressed $lemons_to_press to lemonade. You have $lemons now."
+            break
+        else
+            echo "Not enough lemons! You need $lemons_to_press lemons, but only have $lemons."
+        end
+    else
+        echo "Invalid input! Please enter a whole number."
+    end
+end
