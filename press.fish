@@ -87,7 +87,7 @@ while true
             echo "Pressed $lemons_to_press to lemonade. You have $lemons now."
             break
         else
-            echo "Not enough lemons! You need $lemons_to_press lemons, but only have $lemons."
+            echo "Not enough lemons! You need $lemons_to_press lemons, but you only have $lemons."
         end
     else
         echo "Invalid input! Please enter a whole number."
