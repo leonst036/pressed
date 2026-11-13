@@ -1,3 +1,5 @@
+#!/usr/bin/env fish
+
 echo "Welcome to presssed"
 echo "====================="
 echo "A game to plant, harvest and press lemons into lemonade"
@@ -7,3 +9,7 @@ set day 0
 set lemons 0
 set money 100 # starting money
 set lemonade 0
+
+read -P "Press any key to start" -n 1 start
+
+echo "test"
