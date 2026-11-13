@@ -1,6 +1,7 @@
 #!/usr/bin/env fish
 
 source (dirname (status filename))/lib/texts.fish
+source (dirname (status filename))/lib/weather.fish
 
 echo "Welcome to presssed"
 echo "====================="
@@ -11,6 +12,7 @@ set day 0
 set lemons 0
 set money 100 # starting money
 set lemonade 0
+set weather ""
 
 read -P "Press any key to start" -n 1 start
 
@@ -24,4 +26,5 @@ else
 end
 
 prices
+set weather = calculateWeather $weather
 echo "========================="
