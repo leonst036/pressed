@@ -16,3 +16,11 @@ function prices
     echo "3. Each lemon can be pressed into 1 lemonade."
     echo "4. Each lemonade can be sold for 10 money."
 end
+
+function dailySummary --argument-names customers sold earnings lemons_grown
+    echo "==========DAY SUMMARY=========="
+    echo "Customers: $customers"
+    echo "Lemonade sold: $sold"
+    echo "Money earned: $earnings"
+    echo "Lemons grown: $lemons_grown"
+end

@@ -33,8 +33,14 @@ end
 prices
 while true
     set weather (calculateWeather "$weather")
+    set lemons_grown $planted_lemons
+    if test $lemons_grown -gt 0
+        set lemons (math "$lemons + $lemons_grown")
+        set planted_lemons 0
+    end
     echo "========================="
     echo "It's day $day, the weather is $weather, you have $lemons lemons and $money money."
+    echo "$lemons_grown lemons grew overnight. You now have $lemons lemons."
     echo "Tomorrow $planted_lemons lemons will be ready to harvest."
 
     while true
@@ -78,6 +84,22 @@ while true
     end
 
     while true
+        read -P "How many seeds do you want to plant? (You have $seeds seeds) " seeds_to_plant
+        or exit 1
+
+        if string match -qr '^[0-9]+$' -- "$seeds_to_plant"; and test $seeds_to_plant -le $seeds
+            set seeds (math "$seeds - $seeds_to_plant")
+            set planted_lemons (math "$planted_lemons + $seeds_to_plant")
+            echo "Planted $seeds_to_plant seeds. They will grow into lemons tomorrow."
+            break
+        else if not string match -qr '^[0-9]+$' -- "$seeds_to_plant"
+            echo "Invalid input! Please enter a whole number."
+        else
+            echo "Not enough seeds! You have $seeds seeds."
+        end
+    end
+
+    while true
         read -P "How many lemons do you want to press into lemonade? (You got $lemons lemons) " lemons_to_press
             or exit 1
 
@@ -98,8 +120,13 @@ while true
     end
 
     set result (calculateCustomers $customers $customer_multiplier $day)
-    set customers $result[1]
+    set customers (math "floor($result[1])")
     set customer_multiplier $result[2]
+    set lemonade_sold (math "min($customers, $lemonade)")
+    set lemonade (math "$lemonade - $lemonade_sold")
+    set earnings (math "$lemonade_sold * 10")
+    set money (math "$money + $earnings")
+    dailySummary $customers $lemonade_sold $earnings $lemons_grown
+    set lemonade 0
     set day (math $day + 1)
-    echo $customers
 end
