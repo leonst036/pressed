@@ -2,6 +2,7 @@
 
 source (dirname (status filename))/lib/texts.fish
 source (dirname (status filename))/lib/weather.fish
+source (dirname (status filename))/lib/customers.fish
 
 echo "Welcome to presssed"
 echo "====================="
@@ -30,12 +31,12 @@ else
 end
 
 prices
-set weather (calculateWeather "$weather")
-echo "========================="
-echo "It's day $day, the weather is $weather, you have $lemons lemons and $money money."
-echo "Tomorrow $planted_lemons lemons will be ready to harvest."
-
 while true
+    set weather (calculateWeather "$weather")
+    echo "========================="
+    echo "It's day $day, the weather is $weather, you have $lemons lemons and $money money."
+    echo "Tomorrow $planted_lemons lemons will be ready to harvest."
+
     while true
         read -P "How much lemon seeds do you want to buy? (2 money each) " seeds_to_buy
         or exit 1
@@ -96,6 +97,9 @@ while true
         end
     end
 
-    set customers (calculateCustomers "$customers $customer_multiplier $day")
+    set result (calculateCustomers $customers $customer_multiplier $day)
+    set customers $result[1]
+    set customer_multiplier $result[2]
+    set day (math $day + 1)
     echo $customers
 end
